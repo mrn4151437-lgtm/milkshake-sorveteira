@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Milk Shake Lanchonete e Sorveteira | Mariana & Ouro Preto - MG</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fdf2f8',
+              100: '#fce7f3',
+              200: '#fbcfe8',
+              300: '#f7a8d8',
+              400: '#f472b6',
+              500: '#ec4899', /* Vibrant Pink */
+              600: '#db2777',
+              700: '#be185d',
+              800: '#9d174d',
+              900: '#831843',
+            },
+            purpleBrand: {
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+            },
+            darkBg: '#09090b',
+            darkCard: '#121217',
+            darkBorder: '#27272a'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Outfit"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 15, 20, 0.5);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ec4899;
+      border-radius: 4px;
+    }
+    
+    .glass-card {
+      background: rgba(18, 18, 23, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .light-glass {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-gradient-bg {
+      background: linear-gradient(135deg, #ec4899 0%, #7c3aed 100%);
+    }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(2deg); }
+    }
+
+    .floating-element {
+      animation: floatSlow 6s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
+    }
+
+    .glow-bg {
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+
+    /* Toast Animation */
+    @keyframes slideUp {
+      from { transform: translateY(100%) translateX(-50%); opacity: 0; }
+      to { transform: translateY(0) translateX(-50%); opacity: 1; }
+    }
+    .toast-anim {
+      animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-950 text-slate-100 dark:bg-darkBg dark:text-slate-100 transition-colors duration-300 font-sans min-h-screen flex flex-col justify-between antialiased selection:bg-brand-500 selection:text-white">
+
+  <header class="sticky top-0 z-50 w-full glass-card border-b border-slate-800/80 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#inicio" class="flex items-center gap-3 group">
+        <div class="w-12 h-12 rounded-2xl brand-gradient-bg flex items-center justify-center text-white shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform duration-300">
+          <i class="fa-solid fa-ice-cream text-2xl"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-extrabold text-lg sm:text-2xl tracking-tight text-white group-hover:text-brand-400 transition-colors">
+            MILK SHAKE
+          </span>
+          <span class="text-[10px] tracking-widest uppercase font-bold text-pink-400/90 -mt-1">
+            Lanchonete & Sorveteira
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Links -->
+      <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-slate-300">
+        <a href="#inicio" class="hover:text-brand-400 transition-colors">Início</a>
+        <a href="#cardapio" class="hover:text-brand-400 transition-colors">Cardápio & Pedidos</a>
+        <a href="#validacao" class="hover:text-brand-400 transition-colors flex items-center gap-1.5">
+          <i class="fa-solid fa-shield-check text-emerald-400"></i> Situação Receita
+        </a>
+        <a href="#sobre" class="hover:text-brand-400 transition-colors">Institucional</a>
+        <a href="#contato" class="hover:text-brand-400 transition-colors">Localização</a>
+      </nav>
+
+      <!-- Action Area -->
+      <div class="flex items-center gap-3">
+        <!-- Theme Toggle -->
+        <button id="themeToggle" onclick="toggleDarkMode()" aria-label="Alternar Tema" class="w-10 h-10 rounded-xl bg-slate-800/80 text-slate-300 hover:bg-slate-700 transition-colors flex items-center justify-center border border-slate-700/60">
+          <i class="fa-solid fa-moon dark:hidden text-amber-400"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-brand-400"></i>
+        </button>
+
+        <!-- Direct WhatsApp CTA -->
+        <a href="https://wa.me/5531999999999?text=Olá!%20Vim%20pelo%20site%20da%20Milk%20Shake%20Lanchonete%20e%20Sorveteira." target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-md shadow-emerald-600/20 hover:shadow-lg transition-all">
+          <i class="fa-brands fa-whatsapp text-base"></i> Pedir WhatsApp
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Abrir Menu" class="md:hidden w-10 h-10 rounded-xl bg-slate-800 text-slate-200 flex items-center justify-center border border-slate-700">
+          <i class="fa-solid fa-bars text-lg" id="menuIcon"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobileMenu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 py-6 space-y-4">
+      <a href="#inicio" onclick="toggleMobileMenu()" class="block font-medium text-slate-200 hover:text-brand-400">Início</a>
+      <a href="#cardapio" onclick="toggleMobileMenu()" class="block font-medium text-slate-200 hover:text-brand-400">Cardápio & Pedidos</a>
+      <a href="#validacao" onclick="toggleMobileMenu()" class="block font-medium text-slate-200 hover:text-brand-400">Consulta Fiscal CNPJ</a>
+      <a href="#sobre" onclick="toggleMobileMenu()" class="block font-medium text-slate-200 hover:text-brand-400">Empresa / Sócios</a>
+      <a href="#contato" onclick="toggleMobileMenu()" class="block font-medium text-slate-200 hover:text-brand-400">Contato & Localização</a>
+      <div class="pt-2">
+        <a href="https://wa.me/5531999999999" target="_blank" class="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 text-white font-semibold py-3 rounded-xl">
+          <i class="fa-brands fa-whatsapp text-lg"></i> Fazer Pedido no WhatsApp
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    
+    <!-- HERO SECTION -->
+    <section id="inicio" class="relative overflow-hidden pt-10 pb-20 lg:pt-20 lg:pb-28">
+      
+      <!-- Gradient Glow Blobs -->
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-500/20 rounded-full blur-[120px] pointer-events-none glow-bg"></div>
+      <div class="absolute top-1/3 right-10 w-[350px] h-[350px] bg-purpleBrand-500/20 rounded-full blur-[100px] pointer-events-none glow-bg"></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Text Column -->
+          <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+            
+            <!-- Receita Federal Regularity Badge -->
+            <div class="inline-flex items-center gap-2.5 bg-emerald-950/90 border border-emerald-700/80 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-emerald-300 shadow-md">
+              <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+              </span>
+              <i class="fa-solid fa-circle-check text-emerald-400"></i> EMPRESA ATIVA E REGULAR NA RECEITA FEDERAL
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight font-display tracking-tight">
+              Os Melhores Milk Shakes & Sorvetes de <span class="gradient-text">Mariana e Ouro Preto</span>
+            </h1>
+
+            <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+              O ponto de encontro perfeito na <strong>Praça Tancredo Neves, 89 (Centro - Mariana)</strong>. Sabores cremosos, ingredientes selecionados, açai na tigela, sucos e lanches deliciosos preparados na hora.
+            </p>
+
+            <!-- Buttons -->
+            <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <a href="#cardapio" class="inline-flex items-center justify-center gap-3 brand-gradient-bg text-white font-extrabold text-sm uppercase tracking-wider px-8 py-4 rounded-2xl shadow-xl shadow-brand-500/25 hover:shadow-brand-500/40 hover:-translate-y-0.5 transition-all">
+                <i class="fa-solid fa-ice-cream text-lg"></i> Ver Cardápio & Pedir
+              </a>
+              <button onclick="copyToClipboard('08.290.598/0002-93', 'CNPJ Filial Mariana copiado!')" class="inline-flex items-center justify-center gap-3 bg-slate-900/90 text-slate-200 font-semibold px-6 py-4 rounded-2xl border border-slate-800 hover:bg-slate-800 shadow-sm transition-all group">
+                <i class="fa-regular fa-copy text-brand-400 group-hover:scale-110 transition-transform"></i> Copiar CNPJ 08.290.598/0002-93
+              </button>
+            </div>
+
+            <!-- Key Trust Metrics -->
+            <div class="pt-8 border-t border-slate-800/80 grid grid-cols-3 gap-4 text-center lg:text-left">
+              <div>
+                <span class="block text-2xl sm:text-3xl font-black text-white font-display">100% Ativa</span>
+                <span class="text-xs text-slate-400 font-medium">Receita Federal</span>
+              </div>
+              <div>
+                <span class="block text-2xl sm:text-3xl font-black text-white font-display">Mariana/MG</span>
+                <span class="text-xs text-slate-400 font-medium">Praça Tancredo Neves</span>
+              </div>
+              <div>
+                <span class="block text-2xl sm:text-3xl font-black text-pink-400 font-display">Ouro Preto</span>
+                <span class="text-xs text-slate-400 font-medium">Sede / Matriz</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Hero Floating Card / Official Identification -->
+          <div class="lg:col-span-5 relative">
+            <div class="relative mx-auto max-w-md lg:max-w-none">
+              
+              <!-- Glow back -->
+              <div class="absolute -inset-1 brand-gradient-bg rounded-3xl blur-xl opacity-40 animate-pulse"></div>
+              
+              <!-- Card Content -->
+              <div class="relative bg-slate-900/90 rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-800 space-y-6">
+                
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold text-xl">
+                      <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-white text-base">Unidade Filial - Mariana</h3>
+                      <p class="text-xs text-pink-400 font-medium">Fundada em 22/09/2023</p>
+                    </div>
+                  </div>
+                  <span class="bg-emerald-950 text-emerald-400 border border-emerald-700/80 text-xs font-extrabold px-3 py-1 rounded-full flex items-center gap-1">
+                    <i class="fa-solid fa-shield-check"></i> ATIVA
+                  </span>
+                </div>
+
+                <!-- Legal Data Summary -->
+                <div class="space-y-2.5 text-xs font-mono">
+                  <div class="bg-slate-950/80 p-3 rounded-xl flex justify-between items-center border border-slate-800">
+                    <span class="text-slate-400">CNPJ Filial:</span>
+                    <span class="font-bold text-white">08.290.598/0002-93</span>
+                  </div>
+                  <div class="bg-slate-950/80 p-3 rounded-xl flex justify-between items-center border border-slate-800">
+                    <span class="text-slate-400">Razão Social:</span>
+                    <span class="font-bold text-slate-200 text-right truncate max-w-[190px]">Milk Shake Mix Sorveteria Ouro Preto LTDA</span>
+                  </div>
+                  <div class="bg-slate-950/80 p-3 rounded-xl flex justify-between items-center border border-slate-800">
+                    <span class="text-slate-400">Porte / Regime:</span>
+                    <span class="font-bold text-emerald-400">ME • Simples Nacional</span>
+                  </div>
+                  <div class="bg-slate-950/80 p-3 rounded-xl flex justify-between items-center border border-slate-800">
+                    <span class="text-slate-400">Capital Social:</span>
+                    <span class="font-bold text-white">R$ 200.000,00</span>
+                  </div>
+                </div>
+
+                <div class="bg-pink-950/30 rounded-2xl p-4 border border-pink-900/40 flex items-start gap-3">
+                  <i class="fa-solid fa-location-dot text-brand-400 text-lg mt-0.5"></i>
+                  <p class="text-xs text-pink-200/90 leading-relaxed">
+                    <strong>Endereço Sede Mariana:</strong> Praça Tancredo Neves, 89 - Centro, Mariana - MG, CEP 35.420-042.
+                  </p>
+                </div>
+
+                <a href="#contato" class="w-full py-3.5 brand-gradient-bg hover:opacity-90 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 transition-all shadow-md shadow-brand-500/20">
+                  <i class="fa-solid fa-map-location-dot"></i> Ver Mapa de Acesso em Mariana
+                </a>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="cardapio" class="py-16 lg:py-24 bg-slate-950 transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
+          <span class="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-brand-400 bg-brand-500/10 px-3.5 py-1.5 rounded-full border border-brand-500/20">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Cardápio Interativo
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-display">
+            Monte seu Pedido & Envie no WhatsApp
+          </h2>
+          <p class="text-slate-400 text-sm sm:text-base">
+            Selecione seus milk shakes, sorvetes e acompanhamentos. O sistema calcula a comanda e gera a mensagem instantânea!
+          </p>
+        </div>
+
+        <!-- Menu Filter Tabs -->
+        <div class="flex flex-wrap justify-center gap-2 mb-8">
+          <button onclick="filterMenu('all')" class="menu-tab-btn bg-brand-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all" data-category="all">
+            Todos os Itens
+          </button>
+          <button onclick="filterMenu('milkshake')" class="menu-tab-btn bg-slate-900 text-slate-300 hover:bg-slate-800 font-bold text-xs px-4 py-2.5 rounded-xl border border-slate-800 transition-all" data-category="milkshake">
+            <i class="fa-solid fa-whiskey-glass text-brand-400"></i> Milk Shakes
+          </button>
+          <button onclick="filterMenu('sorvete')" class="menu-tab-btn bg-slate-900 text-slate-300 hover:bg-slate-800 font-bold text-xs px-4 py-2.5 rounded-xl border border-slate-800 transition-all" data-category="sorvete">
+            <i class="fa-solid fa-ice-cream text-brand-400"></i> Sorvetes & Açaí
+          </button>
+          <button onclick="filterMenu('lanches')" class="menu-tab-btn bg-slate-900 text-slate-300 hover:bg-slate-800 font-bold text-xs px-4 py-2.5 rounded-xl border border-slate-800 transition-all" data-category="lanches">
+            <i class="fa-solid fa-burger text-brand-400"></i> Lanches & Bebidas
+          </button>
+        </div>
+
+        <div class="grid lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Menu Items List -->
+          <div class="lg:col-span-7 space-y-4">
+            <div id="menuItemsContainer" class="grid sm:grid-cols-2 gap-4">
+              <!-- Dynamically rendered via JavaScript -->
+            </div>
+          </div>
+
+          <!-- Order Summary Simulator Box -->
+          <div class="lg:col-span-5 bg-slate-900 rounded-3xl p-6 border border-slate-800 shadow-xl space-y-6 sticky top-28">
+            
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+              <h3 class="font-bold text-white text-lg flex items-center gap-2">
+                <i class="fa-solid fa-receipt text-brand-400"></i> Resumo da Comanda
+              </h3>
+              <span id="cartBadge" class="bg-brand-500 text-white text-xs font-extrabold px-2.5 py-1 rounded-full">0 itens</span>
+            </div>
+
+            <!-- Cart Items Summary -->
+            <div id="cartList" class="space-y-3 max-h-[220px] overflow-y-auto pr-1 text-xs">
+              <p class="text-slate-500 text-center py-6">Nenhum item adicionado ainda.<br>Clique no <strong class="text-brand-400">+</strong> ao lado do produto.</p>
+            </div>
+
+            <!-- Price & Form -->
+            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-4">
+              <div class="flex justify-between items-center">
+                <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Total Estimado:</span>
+                <span id="totalPrice" class="text-2xl font-black text-brand-400 font-display">R$ 0,00</span>
+              </div>
+
+              <div class="space-y-2">
+                <label for="customerName" class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Seu Nome / Ponto de Retirada ou Entrega:</label>
+                <input type="text" id="customerName" placeholder="Ex: Maria - Retirada na loja" class="w-full px-3.5 py-2.5 bg-slate-900 text-slate-100 rounded-xl border border-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
+              </div>
+
+              <button onclick="sendOrderToWhatsApp()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-600/25 transition-all flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp text-lg"></i> Enviar Pedido via WhatsApp
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="validacao" class="py-16 lg:py-24 bg-slate-900 border-y border-slate-800 transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="max-w-4xl mx-auto space-y-8">
+          
+          <div class="text-center space-y-3">
+            <span class="inline-flex items-center gap-2 text-xs font-extrabold text-emerald-400 uppercase tracking-widest bg-emerald-950/80 px-3.5 py-1.5 rounded-full border border-emerald-700/80">
+              <i class="fa-solid fa-shield-check"></i> Consulta de Regularidade Fiscal
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-display">
+              Cadastro Oficial na Receita Federal
+            </h2>
+            <p class="text-slate-300 text-sm sm:text-base">
+              Informações públicas do CNPJ cadastrado com situação <strong>ATIVA e REGULAR</strong>.
+            </p>
+          </div>
+
+          <!-- Search Filter Filter input -->
+          <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-3 items-center">
+            <div class="relative flex-grow w-full">
+              <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+              <input type="text" id="fiscalSearch" onkeyup="filterFiscalCards()" placeholder="Buscar por CNPJ, Razão Social, CNAE, Sócia ou Cidade..." class="w-full pl-10 pr-4 py-2.5 bg-slate-900 text-slate-100 rounded-xl border border-slate-800 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-brand-500">
+            </div>
+            <button onclick="resetFiscalSearch()" class="w-full sm:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold transition-colors flex items-center justify-center gap-2">
+              <i class="fa-solid fa-rotate-right"></i> Limpar
+            </button>
+          </div>
+
+          <!-- Official Registry Card -->
+          <div class="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden shadow-2xl">
+            
+            <div class="bg-slate-900 p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800">
+              <div>
+                <span class="text-xs font-mono text-brand-400 font-bold block mb-1">
+                  <i class="fa-solid fa-building text-xs"></i> UNIDADE FILIAL • MARIANA / MG
+                </span>
+                <h3 class="text-xl sm:text-2xl font-black text-white font-display">
+                  MILK SHAKE MIX SORVETERIA OURO PRETO LTDA
+                </h3>
+                <p class="text-xs text-slate-400 mt-0.5">Nome Fantasia: <strong class="text-slate-200">Milk Shake Lanchonete e Sorveteira</strong></p>
+              </div>
+
+              <div class="flex flex-col items-start md:items-end gap-2 shrink-0">
+                <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-extrabold px-3.5 py-1.5 rounded-full flex items-center gap-2">
+                  <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  SITUAÇÃO: ATIVA & REGULAR
+                </span>
+                <span class="text-[11px] text-slate-400 font-mono">Abertura: 22/09/2023</span>
+              </div>
+            </div>
+
+            <div id="fiscalDetailsGrid" class="p-6 sm:p-8 grid sm:grid-cols-2 gap-4 text-xs">
+              
+              <div class="fiscal-card-item bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-1">
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">CNPJ Filial Mariana</span>
+                <div class="flex items-center justify-between gap-2">
+                  <span class="font-mono font-bold text-white text-base">08.290.598/0002-93</span>
+                  <button onclick="copyToClipboard('08.290.598/0002-93', 'CNPJ copiado!')" class="text-brand-400 hover:text-brand-300 p-1.5 rounded-lg bg-slate-800 border border-slate-700">
+                    <i class="fa-regular fa-copy"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="fiscal-card-item bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-1">
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">CNPJ Matriz Ouro Preto</span>
+                <div class="flex items-center justify-between gap-2">
+                  <span class="font-mono font-bold text-slate-200 text-sm">08.290.598/0001-02</span>
+                  <span class="text-[10px] text-slate-500 font-mono">Rua São José, 83</span>
+                </div>
+              </div>
+
+              <div class="fiscal-card-item bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-1">
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Regime Tributário & Enquadramento</span>
+                <p class="font-bold text-emerald-400">Optante pelo Simples Nacional</p>
+                <p class="text-slate-400 text-[11px]">Porte: Microempresa (ME) • Capital: R$ 200.000,00</p>
+              </div>
+
+              <div class="fiscal-card-item bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-1">
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Natureza Jurídica & Sócia</span>
+                <p class="font-bold text-white">Sociedade Empresária Limitada (206-2)</p>
+                <p class="text-slate-400 text-[11px]">Sócia: Isabella Maria Santos Neves</p>
+              </div>
+
+              <div class="fiscal-card-item bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-1 sm:col-span-2">
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Endereço da Sede Mariana</span>
+                <p class="font-bold text-white text-sm">Praça Tancredo Neves, 89 - Centro, Mariana - MG</p>
+                <p class="text-slate-400 text-[11px]">CEP: 35.420-042</p>
+              </div>
+
+              <!-- CNAEs List -->
+              <div class="fiscal-card-item sm:col-span-2 bg-brand-500/10 p-4 rounded-2xl border border-brand-500/20 space-y-2">
+                <span class="text-xs font-black text-brand-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-list-check"></i> Atividades Econômicas Cadastradas (CNAE)
+                </span>
+                
+                <div class="grid sm:grid-cols-2 gap-2 text-[11px]">
+                  <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                    <span class="font-mono font-bold text-brand-400 block">I-5611-2/03 (PRINCIPAL)</span>
+                    <span class="text-slate-200">Lanchonetes, casas de chá, de sucos e similares</span>
+                  </div>
+                  <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                    <span class="font-mono font-bold text-slate-400 block">G-4723-7/00 (SECUNDÁRIA)</span>
+                    <span class="text-slate-400">Comércio varejista de bebidas</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Footer Action Bar -->
+            <div class="bg-slate-900 px-6 py-4 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3">
+              <span class="text-xs text-slate-400 flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-emerald-400"></i> Dados em conformidade com a Base da Receita Federal do Brasil
+              </span>
+              <button onclick="window.print()" class="text-xs font-bold text-slate-300 hover:text-brand-400 flex items-center gap-2">
+                <i class="fa-solid fa-print"></i> Imprimir Comprovante CNPJ
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="sobre" class="py-16 lg:py-24 bg-slate-950 transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+          
+          <div class="lg:col-span-6 space-y-6">
+            <span class="inline-flex items-center gap-2 text-xs font-black text-brand-400 uppercase tracking-widest bg-brand-500/10 px-3.5 py-1.5 rounded-full border border-brand-500/20">
+              <i class="fa-solid fa-heart"></i>Tradição e Sabor na Região
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-black text-white font-display">
+              Compromisso com a Qualidade em Mariana e Ouro Preto
+            </h2>
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+              A <strong>Milk Shake Mix Sorveteria Ouro Preto LTDA</strong> atua na região dos Inconfidentes trazendo combinações irresistíveis de milk shakes clássicos e especiais, sorvetes artesanais e açaí na tigela.
+            </p>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Nossa unidade filial em Mariana fica estrategicamente posicionada na Praça Tancredo Neves, oferecendo um ambiente aconchegante para reunir amigos e família com receitas preparadas na hora.
+            </p>
+
+            <div class="grid sm:grid-cols-2 gap-4 pt-2">
+              <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800">
+                <i class="fa-solid fa-check text-brand-400 text-lg mb-2 block"></i>
+                <h4 class="font-bold text-white text-sm">Cremosidade Única</h4>
+                <p class="text-xs text-slate-400">Ingredientes selecionados para garantir o melhor sabor.</p>
+              </div>
+              <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800">
+                <i class="fa-solid fa-location-dot text-brand-400 text-lg mb-2 block"></i>
+                <h4 class="font-bold text-white text-sm">Localização Central</h4>
+                <p class="text-xs text-slate-400">Fácil acesso no centro de Mariana e Ouro Preto.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Network Matrix & Filial Diagram -->
+          <div class="lg:col-span-6 bg-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6">
+            <h3 class="font-bold text-white text-lg border-b border-slate-800 pb-4 flex items-center gap-2">
+              <i class="fa-solid fa-sitemap text-brand-400"></i> Estrutura do Grupo Econômico
+            </h3>
+
+            <div class="space-y-4">
+              <!-- Matriz -->
+              <div class="p-4 bg-slate-950 rounded-2xl border border-slate-800 space-y-1">
+                <div class="flex justify-between items-center">
+                  <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">UNIDADE MATRIZ</span>
+                  <span class="text-[10px] font-mono bg-slate-800 px-2 py-0.5 rounded text-slate-300">08.290.598/0001-02</span>
+                </div>
+                <p class="font-bold text-white text-sm">PLANETA COMPUTADORES E ACESSORIOS</p>
+                <p class="text-xs text-slate-400">Rua São José, 83 - Centro, Ouro Preto - MG • CEP 35.400-000</p>
+              </div>
+
+              <!-- Filial -->
+              <div class="p-4 bg-brand-500/10 rounded-2xl border border-brand-500/30 space-y-1">
+                <div class="flex justify-between items-center">
+                  <span class="text-xs font-bold text-brand-400 uppercase tracking-wider">UNIDADE FILIAL (ESTA UNIDADE)</span>
+                  <span class="text-[10px] font-mono bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded">08.290.598/0002-93</span>
+                </div>
+                <p class="font-bold text-white text-sm">MILK SHAKE LANCHONETE E SORVETEIRA</p>
+                <p class="text-xs text-slate-300">Praça Tancredo Neves, 89 - Centro, Mariana - MG • CEP 35.420-042</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="contato" class="py-16 lg:py-24 bg-slate-900 border-t border-slate-800 transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto space-y-3 mb-16">
+          <span class="text-xs font-black uppercase tracking-widest text-brand-400">Mariana / MG</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-display">
+            Venha nos Visitar
+          </h2>
+          <p class="text-slate-400 text-sm sm:text-base">
+            No coração de Mariana, em frente à Praça Tancredo Neves.
+          </p>
+        </div>
+
+        <div class="grid lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Contact Info -->
+          <div class="lg:col-span-5 space-y-6">
+            
+            <div class="bg-slate-950 rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-4">
+              <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-lg">Endereço Mariana / MG</h3>
+                <p class="text-slate-300 text-sm mt-1 leading-relaxed">
+                  Praça Tancredo Neves, 89<br>
+                  Centro — Mariana / MG<br>
+                  CEP: 35.420-042
+                </p>
+              </div>
+              <a href="https://maps.google.com/?q=Praca+Tancredo+Neves+89+Centro+Mariana+MG" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-bold text-brand-400 hover:underline pt-2">
+                Abrir no Google Maps <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            </div>
+
+            <div class="bg-slate-950 rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-4">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl">
+                <i class="fa-brands fa-whatsapp"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-lg">Atendimento via WhatsApp</h3>
+                <p class="text-slate-400 text-xs mt-1">
+                  Pedidos, dúvidas e informações sobre sabores do dia.
+                </p>
+              </div>
+
+              <a href="https://wa.me/5531999999999" target="_blank" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl text-center block transition-colors">
+                <i class="fa-brands fa-whatsapp text-lg"></i> Chamar no WhatsApp
+              </a>
+            </div>
+
+          </div>
+
+          <!-- Embedded Google Map -->
+          <div class="lg:col-span-7 bg-slate-950 p-4 rounded-3xl border border-slate-800 h-full min-h-[380px] flex flex-col">
+            <div class="w-full h-full min-h-[340px] rounded-2xl overflow-hidden relative border border-slate-800">
+              <iframe 
+                title="Mapa Milk Shake Lanchonete Mariana"
+                width="100%" 
+                height="100%" 
+                style="border:0; min-height: 350px;" 
+                loading="lazy" 
+                allowfullscreen 
+                src="https://maps.google.com/maps?q=Praca+Tancredo+Neves+89+Mariana+MG&t=&z=16&ie=UTF8&iwloc=&output=embed">
+              </iframe>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-900 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-slate-900 pb-8">
+        
+        <div class="flex items-center gap-3 text-center md:text-left">
+          <div class="w-10 h-10 rounded-xl brand-gradient-bg flex items-center justify-center text-white font-bold text-lg">
+            <i class="fa-solid fa-ice-cream"></i>
+          </div>
+          <div>
+            <span class="font-display font-bold text-white text-lg block">Milk Shake Lanchonete e Sorveteira</span>
+            <span class="text-xs text-slate-500">Milk Shake Mix Sorveteria Ouro Preto LTDA • CNPJ 08.290.598/0002-93</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-6 text-xs font-semibold text-slate-300">
+          <a href="#inicio" class="hover:text-brand-400 transition-colors">Início</a>
+          <a href="#cardapio" class="hover:text-brand-400 transition-colors">Cardápio</a>
+          <a href="#validacao" class="hover:text-brand-400 transition-colors">Consulta CNPJ</a>
+          <a href="#sobre" class="hover:text-brand-400 transition-colors">Institucional</a>
+          <a href="#contato" class="hover:text-brand-400 transition-colors">Contato</a>
+        </div>
+
+      </div>
+
+      <div class="flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+        <p>© 2023 - <span id="currentYear"></span> Milk Shake Mix Sorveteria Ouro Preto LTDA. Todos os direitos reservados.</p>
+        <p class="flex items-center gap-1.5">
+          <i class="fa-solid fa-shield-check text-emerald-400"></i> Empresa Ativa e Regular na Receita Federal
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toastNotification" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden glass-card text-white text-xs font-semibold px-6 py-3.5 rounded-2xl shadow-2xl border border-slate-700/80 items-center gap-3 toast-anim">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-base" id="toastIcon"></i>
+    <span id="toastMessage">Ação realizada com sucesso!</span>
+  </div>
+
+  <script>
+    // Auto Update Year
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Dark Mode Toggle Logic
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const icon = document.getElementById('menuIcon');
+      menu.classList.toggle('hidden');
+      if (menu.classList.contains('hidden')) {
+        icon.className = 'fa-solid fa-bars text-lg';
+      } else {
+        icon.className = 'fa-solid fa-xmark text-lg';
+      }
+    }
+
+    // Copy to Clipboard
+    function copyToClipboard(text, message) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => showToast(message));
+      } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          showToast(message);
+        } catch (error) {
+          showToast("Erro ao copiar.");
+        }
+        document.body.removeChild(textArea);
+      }
+    }
+
+    // Toast Controller
+    let toastTimeout;
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMessage');
+      toastMsg.textContent = msg;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3500);
+    }
+
+    // Fiscal Data Filter
+    function filterFiscalCards() {
+      const query = document.getElementById('fiscalSearch').value.toLowerCase();
+      const items = document.querySelectorAll('.fiscal-card-item');
+
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(query) ? 'block' : 'none';
+      });
+    }
+
+    function resetFiscalSearch() {
+      document.getElementById('fiscalSearch').value = '';
+      filterFiscalCards();
+    }
+
+    // MENU & SIMULATOR DATA
+    const menuProducts = [
+      { id: 1, category: 'milkshake', name: 'Milk Shake Ovomaltine Crocante', desc: 'Aparência inconfundível, batido na hora com bastante pedaços de Ovomaltine.', price: 18.00, icon: 'fa-whiskey-glass' },
+      { id: 2, category: 'milkshake', name: 'Milk Shake Nutella Gourmet', desc: 'Nutella original pura misturada com sorvete cremoso de baunilha.', price: 22.00, icon: 'fa-whiskey-glass' },
+      { id: 3, category: 'milkshake', name: 'Milk Shake Morango Natural', desc: 'Feito com calda artesanal de morangos selecionados e chantilly.', price: 16.00, icon: 'fa-whiskey-glass' },
+      { id: 4, category: 'sorvete', name: 'Açaí na Tigela 500ml', desc: 'Açaí puro com banana, granola, leite em pó e leite condensado.', price: 20.00, icon: 'fa-bowl-food' },
+      { id: 5, category: 'sorvete', name: 'Sundae Especial 3 Bolas', desc: '3 bolas de sorvete à sua escolha com cobertura quente e castanhas.', price: 17.50, icon: 'fa-ice-cream' },
+      { id: 6, category: 'lanches', name: 'Misto Quente Especial', desc: 'Pão de fôrma na chapa, queijo prato duplo e presunto de peru.', price: 12.00, icon: 'fa-burger' },
+      { id: 7, category: 'lanches', name: 'Suco Natural 400ml', desc: 'Laranja, Limão, Abacaxi com Hortelã ou Polpa de Maracujá.', price: 9.00, icon: 'fa-glass-water' }
+    ];
+
+    let cartState = {};
+
+    function renderMenuItems(category = 'all') {
+      const container = document.getElementById('menuItemsContainer');
+      container.innerHTML = '';
+
+      const filtered = category === 'all' 
+        ? menuProducts 
+        : menuProducts.filter(p => p.category === category);
+
+      filtered.forEach(product => {
+        const qty = cartState[product.id] || 0;
+        const card = document.createElement('div');
+        card.className = 'p-4 bg-slate-900 rounded-2xl border border-slate-800 flex items-center justify-between gap-3 hover:border-brand-500/40 transition-colors';
+        card.innerHTML = `
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center shrink-0">
+              <i class="fa-solid ${product.icon}"></i>
+            </div>
+            <div class="truncate">
+              <h4 class="font-bold text-white text-xs sm:text-sm truncate">${product.name}</h4>
+              <p class="text-[11px] text-slate-400 truncate">${product.desc}</p>
+              <span class="text-xs text-brand-400 font-mono font-bold">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="updateCart(${product.id}, -1)" class="w-7 h-7 rounded-lg bg-slate-800 text-slate-200 font-bold flex items-center justify-center hover:bg-slate-700 transition-colors">-</button>
+            <span class="w-5 text-center font-bold text-xs text-white font-mono">${qty}</span>
+            <button onclick="updateCart(${product.id}, 1)" class="w-7 h-7 rounded-lg brand-gradient-bg text-white font-bold flex items-center justify-center hover:opacity-90 transition-opacity">+</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterMenu(category) {
+      document.querySelectorAll('.menu-tab-btn').forEach(btn => {
+        if (btn.dataset.category === category) {
+          btn.className = 'menu-tab-btn brand-gradient-bg text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all';
+        } else {
+          btn.className = 'menu-tab-btn bg-slate-900 text-slate-300 hover:bg-slate-800 font-bold text-xs px-4 py-2.5 rounded-xl border border-slate-800 transition-all';
+        }
+      });
+      renderMenuItems(category);
+    }
+
+    function updateCart(id, change) {
+      const current = cartState[id] || 0;
+      const next = current + change;
+      if (next <= 0) {
+        delete cartState[id];
+      } else {
+        cartState[id] = next;
+      }
+      renderMenuItems(getactiveCategory());
+      updateCartSummary();
+    }
+
+    function getactiveCategory() {
+      const activeBtn = document.querySelector('.menu-tab-btn.brand-gradient-bg');
+      return activeBtn ? activeBtn.dataset.category : 'all';
+    }
+
+    function updateCartSummary() {
+      const cartList = document.getElementById('cartList');
+      const totalPriceEl = document.getElementById('totalPrice');
+      const cartBadge = document.getElementById('cartBadge');
+
+      const keys = Object.keys(cartState);
+      if (keys.length === 0) {
+        cartList.innerHTML = `<p class="text-slate-500 text-center py-6">Nenhum item adicionado ainda.<br>Clique no <strong class="text-brand-400">+</strong> ao lado do produto.</p>`;
+        totalPriceEl.textContent = 'R$ 0,00';
+        cartBadge.textContent = '0 itens';
+        return;
+      }
+
+      let total = 0;
+      let totalQty = 0;
+      cartList.innerHTML = '';
+
+      keys.forEach(id => {
+        const product = menuProducts.find(p => p.id === parseInt(id));
+        const qty = cartState[id];
+        const subtotal = product.price * qty;
+        total += subtotal;
+        totalQty += qty;
+
+        const itemEl = document.createElement('div');
+        itemEl.className = 'flex justify-between items-center bg-slate-950 p-2.5 rounded-xl border border-slate-800/80';
+        itemEl.innerHTML = `
+          <div>
+            <span class="font-bold text-white block">${qty}x ${product.name}</span>
+            <span class="text-[10px] text-slate-400">R$ ${product.price.toFixed(2).replace('.', ',')} un</span>
+          </div>
+          <span class="font-mono font-bold text-brand-400">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
+        `;
+        cartList.appendChild(itemEl);
+      });
+
+      totalPriceEl.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+      cartBadge.textContent = `${totalQty} itens`;
+    }
+
+    function sendOrderToWhatsApp() {
+      const keys = Object.keys(cartState);
+      if (keys.length === 0) {
+        showToast("Selecione pelo menos 1 item para montar o pedido!");
+        return;
+      }
+
+      let message = "Olá! Gostaria de fazer o seguinte pedido na Milk Shake Lanchonete e Sorveteira:\n\n";
+      let total = 0;
+
+      keys.forEach(id => {
+        const product = menuProducts.find(p => p.id === parseInt(id));
+        const qty = cartState[id];
+        const subtotal = product.price * qty;
+        total += subtotal;
+        message += `• ${qty}x ${product.name} (R$ ${subtotal.toFixed(2).replace('.', ',')})\n`;
+      });
+
+      const note = document.getElementById('customerName').value.trim();
+      if (note) {
+        message += `\nNome / Observação: ${note}\n`;
+      }
+
+      message += `\n*Valor Total Estimado: R$ ${total.toFixed(2).replace('.', ',')}*`;
+
+      const encoded = encodeURIComponent(message);
+      window.open(`https://wa.me/5531999999999?text=${encoded}`, '_blank');
+    }
+
+    // Initialize App
+    window.onload = function() {
+      renderMenuItems('all');
+    };
+  </script>
+</body>
+</html>
